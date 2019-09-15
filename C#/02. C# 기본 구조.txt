@@ -1,0 +1,66 @@
+HelloWorld.cs 파일 : source code file written in C# means "C Sharp"
+
+
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using static System.Console;
+
+namespace FirstVisual2019
+{
+    class HelloWorld
+    {
+        static void Main(string[] args)
+        {
+            if(args.Length == 0)
+            {
+                Console.WriteLine("사용법 : HelloWorld.exe <이름>");
+                return; 
+            }
+
+            WriteLine("Hello, {0}", args[0]);
+        }        
+    }
+}
+
+
+using : C#의 키워드 중 하나입니다.(Java의 import로 볼 수 있을듯) " " 네임스페이스 안의 클래스를 사용하겠다고 컴파일러에게 알려준다.
+
+System : C# 코드가 기본적으로 필요로 하는 클래스를 담고 있는 네임스페이스(Java의 package로 볼 수 있을듯)
+(만약 using System; 문장을 생략했다면 System.Console.WriteLine()으로 글자 수가 늘어나야 한다.)
+
+using static : 어떤 데이터 형식(예:클래스)의 정적 멤버를 데이터 형식의 이름을 명시하지 않고 참조하겠다고 선언.
+(System.Console이 이러한 정적 멤버를 여럿 가지고 있다.)
+
+namespace FirstVisual2019 : 네임스페이스는 성격이나 하는 일이 비슷한 클래스, 구조체, 인터페이스, 대리자, 열거 형식 등을 하나의 이름 아래 묶는 일을 합니다. ex) System.IO에는 입출력을 다루는 각종 클래스, 구조체, 대리자, 열거 형식들이 있다.
+(다른 네임스페이스에서 FirstVisual2019 클래스를 사용하려면 using FirstVisual2019; 문장을 이용해서 FirstVisual2019 네임스페이스를 참조하거나 FirstVisual2019.HelloWorld처럼 클래스가 소속되어 있는 네임스페이스와 클래스의 이름을 붙여줘야 합니다.)
+
+static void Main(string[] args)
+- 모든 프로그램은 반드시 Main이라는 이름을 가진 메소드를 하나 가지고 있어야 한다.
+- 프로그램이 실행되면 CLR은 프로그램을 메모리에 올린 후 프로그램의 진입점(main())을 찾는다.
+
+CLR(Common Language Runtime)
+- C#으로 만든 프로그램이 실행되는 환경
+- CLR인 이유는 CLS(Common Language Specification)규격을 따르는 모든 언어로 작성된 프로그램을 지원하기 때문.
+- CLR은 자바의 실행 환경인 자바 가상 머신(JVM)과 비슷한 역할을 합니다. CLR은 .NET 프레임워크와 함께 OS 위에 설치됩니다.
+
+------------------------------------------------
+C# 애플리케이션, VB.NET 애플리케이션, C++ 애플리케이션
+------------------------------------------------
+          Common Language Runtime
+------------------------------------------------
+              .NET 프레임워크
+------------------------------------------------
+                  운영체제
+------------------------------------------------
+                  하드웨어
+------------------------------------------------
+
+
+             
+
+
+
