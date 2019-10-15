@@ -1,0 +1,144 @@
+참고
+youtube "그런 REST API로 괜찮은가?"
+https://jeong-pro.tistory.com/180?category=793347
+
+REST??
+URI 하나의 고유한 리소스(Resource)를 대표하도록 설계된다는 개념.
+
+요약
+-------------------------------------------------------------------------------------------
+사전적 의미.(전송 상태 대표)
+Representational State Transfer Application programming interface
+-->URI 하나의 고유한 리소스(Resource)를 대표하도록 설계된다는 개념
+
+실제 내용.
+REST 분산 하이퍼미디어 시스템(ex.웹)을 위한 아키텍쳐 스타일
+REST 아키텍쳐 스타일을(동시에 하이브리드 아키텍쳐 스타일이라고 말함 <- 집합이니까) 따르는 API
+아키텍쳐 스타일: 제약조건들의 집합
+
+웹이 모바일 앱처럼 업그레이드를 안 하는 이유는 http의 모든 버전을 지원하는 엄청난 노력을 하고 있기 때문이다
+이것을 유지하는 비결은 서버와 클라이언트의 독립적 진화를 통해 가능
+
+--> 6가지 중에 uniform interface(제외하면 잘 만족 외냐면 http니까)
+그 중 
+self-descriptive messages (메시지는 스스로를 설명해야한다.)
+HATEOAS(다음 상태 전이) (애플리케이션의 상태느 Hyperlink를 이용해 전이되어야 한다.)
+를 만족하지 못한다. 이것은 Media Type인 HTML과 JSON의 차이에서 기인한다.
+
+감상문
+현재 상용되고 있는 REST API는 Roy T. Fielding의 REST를 정의를 완벽히 이행하고 있지 못한다.
+정확히 self-descriptive messages, HATEOAS 이 두가지를 위배한다.
+웹이 모바일 앱처럼 업그레이드를 안 하는 이유는
+http의 모든 버전을 지원하는 엄청난 노력을 하고 있기 때문이다.
+
+필기
+-------------------------------------------------------------------------------------------
+Representational State Transfer
+URI 하나의 고유한 리소스(Resource)를 대표하도록 설계된다는 개념.
+
+그부분은 REST 좀 REST스럽지 않은 것 같아요.
+우리가 REST API를 만들어야 하는데 이건 좀 REST API가 아닌 것 같은데?
+
+반박을 하고 싶은데 정확히 모르겠다.
+
+a way of providing interoperability between computer systems on the internet.
+컴퓨터 시스템간의 상호운용성을 제공해주는 방법중에 하나.
+
+#그래서 REST의 역사를 따라가보려 한다.#
+어떻게 인터넷에서 정보를 잘 공유할 것인가
+팀버너스리 
+표현형식 HTML 
+식별자 URI
+전송방법 HTTP
+
+HTTP이후
+HTTP/1.0프로토콜을 여러사람이 설계
+Roy T. Fielding(대학원): 어떻게 하면 웹을 망가트리지 않고 HTTP를 증폭시킬 수 있을까.
+해결책: HTTP Object Model(1994) ---4년뒤 --> REST(1998)
+REST(2000)
+Roy T. Fielding(박사 논문)
+
+서버와 클라이언트가 각각 독립적으로 진화한다.(REST가 나온 이유)
+Rest는 성공했는가? 그렇다고 볼 수 있다. 서버와 클라이언트 독립적으로 진화중
+
+(이런 줄 알았는데.)
+한편 API(Application programming interface)
+인터넷상에 API라는게 만들어지기 시작함.
+SOAP(Salesforce사) 복잡하다. 규칙많다. 어렵다.
+REST(flicker사) 단순하다. 규칙적다. 쉽다(->어렵다).
+
+REST의 승리 
+
+CMIS(2008)
+-CMS를 위한 표준
+-EMC, IBM, Microsoft등이 참여.
+-REST 바인딩 지원
+
+논란 CMIS, MicroSofre REST API Guideline = No REST : Roy T. Fielding (+ 버저닝 안 하는게 최고)
+uri는 https://{serviceRoot}/{collection}/{id} 형식이어야한다.
+GET, PUT, DELETE, POST, HEAD, PATCH, OPTIONS를 지원해야한다.
+API 버저닝은 Magor.minor로 하고 uri에 버전 정보를 포함시킨다.
+등등..
+우리가 타당하다고 생각했던 REST API 
+
+# 그럼 REST란 무엇인가?
+REST 아키텍쳐 스타일을(동시에 하이브리드 아키텍쳐 스타일이라고 말함 <- 집합이니까) 따르는 API
+REST 분산하이퍼미디어 시스템(ex.웹)을 위한 아키텍쳐 스타일
+아키텍쳐 스타일: 제약조건들의 집합
+
+구성하는 스타일(제약조건)
+Client-Server
+stateless
+cache
+uniform interface(제외하면 잘 만족 외냐면 http니까)
+layered system
+code-on-demand(optional) =서버에서 클라이언트에 코드를 보내서 실행할 수 있어야 한다.(javascript)
+
+uniform interface는 4가지 제약조건으로 이루어져있다.
+identification of resources(리소스가 URI로 식별되면 된다.)
+manipuation of resources through representations 잘 만족
+아래 두가지를 자칭 REST API라고 알려진 것들이 지키지 못하고 있음.
+self-descriptive messages
+메시지는 스스로를 설명해야한다.
+HATEOAS(다음 상태 전이)
+애플리케이션의 상태느 Hyperlink를 이용해 전이되어야 한다.(아래 설명)
+
+우리가 만드는 API 꼭 API여야 하는가? 
+Roy T. Fielding : 아니 상관없다.
+시스템 전체를 통제할 수 있다고 생각하거나(ex. 서버 개발자가 클라이언트 개발자를 조종할 수 있거나 혼자서 전부 개발한는 경우), 진화에 관심이 없다면(ex 모바일 업데이트 계속해도 상관없어), REST에 대해 따지느라 시간을 낭비하지 마라.(REST는 꽁자가 아니다. 정말로 시간과 노력이 든다.) 
+하지만 오랜 시간에 걸쳐 진화하는 시스템을 만들고 싶다면 따라야 한다.
+
+왜 API는 REST가 잘 안되나?(일반 웹을 잘 되잖아.)
+
+		흔한 웹 페이지	REST
+protocol		HTTP		HTTP
+커뮤니케이션	사람-기계		기계-기계
+Media Type 	HTML		JSON
+(-->그래서 미디어 타입이 달라, 기계가 이해할 수 있는 format을 사용. -->문제의 원인이 여기구나.)
+
+		HTML						JSON
+Hyperlink		됨(a태그 등)				정의되어 있지 않음.
+Self-descriptive	됨(=HTML 명세=HTML태그에 대한 정의가 다 되었다.)	불완전*(JSON object의 key-value가 어떤 의미인지 정의되어 있지 않지.) 문법까지는 정의 되어 있지만. Array어떻게 해석해라, 대괄호, 어떻게 parsing등 --> 별도의 API 문서들이 필요(만들어서 사용중)
+
+(JSON HTML 비교 사진 확인)
+
+#self-descriptive, HATEOAS가 독립적 진화에 어떻게 도움을 줄까.
+
+self-descriptive: 확장 가능한 커뮤니케이션을 가능하게 한다(=서버, 클라이언트 계속 변할 수 있다). = (서버, 클라리언트)어느쪽이 변해도 메세지만 가지고 해석이 가능하다.)
+
+HATEOAS(=late binding이 가능해진다, 애플리케이션 상태의 전이(Hyperlink를 이용해 전이))
+어디서 어디로 전이가 가능한지 미리 결정되지 않는다.(=쉽게 말해서: 링크는 동적으로 변경될 수 있다.(서버가 링크를 바꾼다고 해도 클라이언트 동작에는 전혀 문제가 없다.<-바뀐 링크만 보고 따라가면 되니까.)) 어떤 상태로 전이가 완료되고 나서야 그 다음 전이될 수 있는 상태가 결정된다.(최종적으로 페이지가 떠야 다음 하이퍼링크가 무엇인지 알 수 있으니까)
+따라서 late binding이 가능하기 때문에 서버가 링크를 마음대(=동적으로)로 바꿀 수 있고 독립적인 진화가 가능하다.
+
+JSON을 RESUfull 하게 바꾼다면? (40:29)
+정리(사진)
+: 설계자가 잘 고려해야겠구나.(상황에 따라서)
+
+그럼 왜 Uniform Interface를 해야하는가?
+독립적 진화
+서버와 클라이언트가 각각 독립적으로 진화한다.(REST가 나온 이유)
+
+please try to adhere to them or choose some other buzzword for your API.
+제발 제약조건을 따르던지 아니면 다른 단어를 써라.
+
+으로 이루어짐.
