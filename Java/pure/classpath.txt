@@ -1,0 +1,21 @@
+환경변수, 운영체제 내에서 어디서나 접근할 수 있는 global변수.
+path등록과 classpath는 다른 거야.
+java xxxx는 java프로그램 실행 명령
+javac xxxx명령은 java파일 컴파일 명령.
+(path에 등록하는 jdk\bin directory에는 java파일과 javac파일이 있다.)
+
+classpath 이름에서와 같이
+클래스가 위치하는 경로를 지정해서 자바가 필요로 하는
+class를 load할 수 있는 방법을 지정.
+
+클래스패스를 지정하지 않으면 현재디렉토리를 클래스패스로 자동으로 지정
+(= java -classpath "." ClasspathDemo2) ClasspathDemo2는 java파일
+
+만약 사용하고자 하는 클래스가 다른 dir에 위치해 있다면 그 위치를 classpath에 지정해 주어야 한다.
+ex)java -classpath ".;lib" ClasspathDemo2
+;세미콜론은 경로(path)와 경로(path)를 구분해주는 구분자 역활.
+(즉 classpathDemo2 클래스에서 필요로 하는 클래스가 lib dir에 있을 경우 이러한 명령을 주어야
+class not found 에러가 나오지 않는다.)
+
+classpath말고 JAVA 어플리케이션에 따라서 JAVA_HOME이라는 시스템 환경변수를 요구하는 경우가 있는다. 
+그래서 bin dir을 제외하고 환경변수에 등록해주면 편리하다.

@@ -1,0 +1,51 @@
+하나의 메소드나 클래스가 있을 때 이것들이 다양한 방법으로 동작하는 것을 의미한다.
+(참고로 overloading이 다형성인지 아닌지에 대해서는 이견이 존재하는 것으로 보인다. )
+
+클래스와 다형성
+*오버라이딩
+package org.opentutorials.javatutorials.polymorphism;
+class A{
+    public String x(){return "A.x";}
+}
+class B extends A{
+    public String x(){return "B.x";}
+    public String y(){return "y";}
+}
+public class PolymorphismDemo1 {
+    public static void main(String[] args) {
+        A obj = new B();
+        System.out.println(obj.x());
+        obj.y(); // 동작하지 않는다.
+    }
+}
+
+동일한 데이터 타입으로 존재하면서 호출했을 때는 각각의 클래스의 메소드의 정의대로 동작한다. --> 다형성 (아래 예제 확인)
+
+package org.opentutorials.javatutorials.polymorphism;
+class A{
+    public String x(){return "A.x";}
+}
+class B extends A{
+    public String x(){return "B.x";}
+    public String y(){return "y";}
+}
+class B2 extends A{
+    public String x(){return "B2.x";}
+}
+public class PolymorphismDemo1 {
+    public static void main(String[] args) {
+        A obj = new B();
+        A obj2 = new B2();
+        System.out.println(obj.x());
+        System.out.println(obj2.x());
+    }
+}
+--> 같은 메소드여도 구체적 구현이 다르기 때문에 실행하면 다른 결과를 가져온다.
+Rest 예제를 넣으면 더 완벽하겠다.(이것이 다형성의 파워)
+이것이 상속과 오버라이딩 그리고 형변환을 결합하여 다형성을 구현 가능하게 한다.
+
+
+인터페이스와 다형성
+
+이것은 인터페이스의 매우 중요한 특징 중의 하나를 보여준다. 인스턴스 objI2의 데이터 타입을 I2로 한다는 것은 인스턴스를 외부에서 제어할 수 있는 조작 장치를 인스턴스 I2의 맴버로 제한한다는 의미가 된다. 인스턴스 I2와 I3로 인해서 하나의 클래스가 다양한 형태를 띄게 되는 것이다.
+

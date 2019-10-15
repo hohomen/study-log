@@ -1,0 +1,106 @@
+스프링 DI가 의존성(new)에 대한 주입이라면,
+
+AOP(Aspect-Oriented Programming), (관점 지향 프로그래밍)
+로직(code) 주입이라고 할 수 있다.
+
+다수의 모듈에 공통적으로 나타나는 부분 = 횡단 관심사(cross-cutting concern)
+-> 반복/ 중복을 분리해서 한 곳에서 관리
+코드 = #횡단 관심사 + #핵심 관심사
+
+로직을 주입한다면 어디에 주입할 수 있을까? 당연히 메소드 안 쪽이다. (프록시가 개입할 수 있는 시점은 5개다. 이해 안 되면 아래 내용 확인)
+Around(메서드 전구역), Before, Afte(2종류로 나뉨), AfterReturning(메서드 정상 종류 후), 
+After Throwing(메서드에서 예외가 발생하면서 종료된 후)으로 총 5군데다.(메서드 시작 전 메서드 종료 후)
+
+
+단순한 Boy.java와 Girl.java에 AOP를 적용해 보자.
+
+Before 환경설정
+1.pom.xml 의존 추가
+spring-tx (트랜잭션), 
+spring-aop
+(AspectJ문법을 이용하기 위해)
+aspectjrt
+aspectjweaver
+2.root-context.xml(or servlet-context)
+네임스페이스 aop tx 추가.
+
+
+실전 예제. (png.701, png702를 참고하면 더 자세히 알 수 있다.)
+pom.xml 추가 
+	<!-- AspectJ -->
+<dependency>
+	<groupId>org.aspectj</groupId>
+	<artifactId>aspectjrt</artifactId>
+	<version>1.6.10</version>
+</dependency>
+<dependency>
+            <groupId>org.aspectj</groupId>
+        	<artifactId>aspectjweaver</artifactId>
+            	<version>1.6.10</version>
+</dependency>
+
+@Aspect
+public class MyAspect {
+	//@Before("execution(public void aop002.Boy.runSomthis ())")
+	@Before("execution(* runSomething())")
+	public void before(JoinPoint joinPoint){
+	System.out.println("얼굴 인식 확인: 문을 개방하라");
+	System.out.println("집에 들어가 신발을 벗고 화장실에서 손을 씻는다.");
+	}
+}
+
+aop002.xml
+    <aop:aspectj-autoproxy />
+    
+    <bean id="myAspect" class="aop002.MyAspect" />
+    <bean id="boy" class="aop002.Boy" />
+    <bean id="girl" class="aop002.Girl" />
+
+Start.java
+
+    public static void main(String[] args) {
+
+   ##  ApplicationContext context = new ClassPathXmlApplicationContext("aop002/aop002.xml");
+        
+        Person romeo = context.getBean("girl", Person.class);
+        
+        romeo.runSomething();
+    }
+
+
+#AOP 적용 전 후 코드 비교.(위의 실전예제 확인, 아래는 의미적 결론)
+1. 횡단 관심사는 모두 사라지고 오직 핵심 관심사만 남았다. --> Boy.java에 단일 책임 원칙(SRP)을 자연스럽게 적용하게 된 것이다.
+2. 스프링 AOP는 프록시를 사용한다.
+aop002.xml <aop:aspectj-autoproxy /> 
+(스프링 프레임워크에게 AOP 프록시를 사용하라고 알려주는 지시자)프록시 패턴을 이용해 횡단 관심사를 핵심 관심사에 주입.
+romeo.runSomething(); --> || 프록시 runSomething()   --> Boy.runSomething() ||
+
+스프링 AOP의 핵심은 아래 세개의 문장으로 요약할 수 있다.
+스프링 AOP는 인터페이스(interface) 기반이다.
+스프링 AOP는 프록시(proxy) 기반이다.
+스프링 AOP는 런타임(runtime) 기반이다.
+
+cf. 
+1. 스프링 AOP에서 재미있는 것은 호출하는 쪽에서나 호출당하는 쪽에서나 누구도 프록시가 존재하는 지조차 모른다는 것이다. 오직 스프링 프레임워크만 프록시의 존재를 안다.
+2. 사실 컴퓨터 세상에는 다양한 프록시가 사용된다. 버퍼도 일종의 프록시라 볼 수 있고 네트워크 속도를 향상시키는 캐시 서버도 프록시의 한 예다. 존재 목적은 다르지만 하는 역할은 모두 중간에서 가로채는 것이라는 동일한 일을 한다.
+
+
+#용어 정리.(아래 5가지 용어와 AOP에 숨어있는 프록시를 이해하면 스프링 AOP를 활용하는 데 충분하다.)
+AOP에도 그들만의 용어가 있다. 이들을 하나 하나 살펴보자.
+
+JoinPoint : Pointcut의 후보자가 되는 모든 메서드들이 JoinPoint, 즉 Aspect 적용이 가능한 지점이 된다.
+
+Pointcut : 자르는 지점, JoinPoint의 부분집합. 횡단 관심사를 적용할 타깃 메서드 = (* runSomethis( ))
+타깃 메서드 지정자에는 익히 잘 알려진 정규식과 AspectJ 표현식(문법) 등을 사용할 수 있다.
+[접근제한자패턴] 리턴타입패턴 [패키지&클래스패턴.]메서드이름패턴(파라미터패턴)[throws 예외패턴]  [=생략가능]
+public void aop002.Boy.runSomthis()
+* runSomethis() p.304
+
+Aspect : 적용 위치 지정자
+스프링 AOP만 보자면 Aspect를 메서드에만 적용할 수 있으니 타깃 메서드 지정자라는 말이 틀리지 않다.그렇지만 AspectJ처럼 스프링 AOP 이전부터 있었고 지금도 유용하게 사용되는 다른 AOP프레임워크에서는 메서드뿐만 아니라 속성 등에도 Aspect를 적용할 수 있기에 그것들까지 고려한다면 Aspect 적용 위치 지정자(지시자)가 맞는 표현이다. Pointcut을 메서드 선정 알고리즘이라고도 한다.
+
+Advice : pointcut에 적용할 로직, 즉 메서드를 의미하는데, 여기에 더해 언제라는 개념까지 포함하고 있다.
+@Before("execution(* runSomething())") //Pointcut이 시작되기 전(@Before)에 before( ) 메서드를 실행하라고 되있음을 알 수 있다.
+
+Advisor = 한 개의 Advice + 한 개의 Pointcut
+(Advisor는 스프링 AOP에서만 사용하는 용어이며 다른 AOP  프레임워크에서는 사용하지 않는다. 또 스프링 버전이 올라가면서 이제는 쓰지 말라고 권고하는 기능이다. 이전에 개발된 코드에서 만날 수 있기에 넣었다.)(스프링이 발전해 오면서 다수의 Advice와 다수의 Pointcut을 다양하게 조합해서 사용할 수 있는 방법, 즉 Aspect가 나왔기 때문이다.)

@@ -1,0 +1,28 @@
+#배열.
+배열을 선언하는 것은 단지 생성된 배열을 다루기 위한 참조변수를 위한 공간이 만들어질 뿐이고, 배열을 생성해야만 비로소 값을 저장할 수 있는 공간이 만들어 진다. 
+배열을 생성하기 위해서는 연산자 'new'와 함께 배열의 타입과 길이를 지정해 주어야 한다.
+선언 = 생성
+타입[] 변수이름 = new 타입[길이];
+int[] score = new int[5];
+int[] score = {50, 60, 70, 80, 90} // new int[]를 생략할 수 있음.
+
+다만 다음과 같이 배열의 선언과 생성을 따로 하는 경우에는 생략할 수 없다.
+int[] score;
+score = new int[5] {50, 60, 70, 80, 90}; //OK
+score = {50, 60, 70, 80, 90}; // ERROR
+
+괄호안에 아무 것도 넣지 않으면 길이가 0인 배열을 생성한다.
+int[] score = { }; ,int[] score = new int[] { };
+
+#반복문
+int[] arr = {50, 60, 70, 80, 90}; or Collection
+
+enhanced for statement
+for(int tmp : arr){
+    System.out.println(tmp);
+}
+기본 for문
+for(int i=0; i < arr.length; i++){
+    System.out.println(arr[i]);
+}
+

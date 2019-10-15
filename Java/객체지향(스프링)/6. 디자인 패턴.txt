@@ -1,0 +1,376 @@
+디자인 패턴이란? 설계 패턴(
+소프트웨어 공학의 개념)
+
+소프트웨어 공학에서 디자인 패턴(Design pattern)은 프로그램 개발 시에 자주 부닥치는 애로 상황에 대한 일반적이고 재사용 가능한 추상화된 해결책이다. 
+
+
+소프트웨어를 설계할 때 특정 맥락에서 자주 발생하는 고질적인 문제들이 또 발생했을 때 재사용할 할 수있는 훌륭한 해결책
+
+
+여기에 패턴이 붙으면 하위 클래스에서 팩터리 메서드를 오버라이딩해서 객체를 반환하게 하는 것을 의미한다.
+
+스프링? OOP 프레임워크
+스프링은 객체 지향의 특성과 설계 원칙을 극한까지 적용한 프레임워크.
+
+#디자인 패턴은 객체 지향의 특성 중 상속(extends), 인터페이스(interface/implements), 합성(객체를 속성으로 사용)을 이용한다. 이 세 가지 방식 외에 다른 방식은 없다. 그러다 보니 여러 디자인 패턴이 비슷해 보일 수 있으니 집중해서 살펴보자.
+
+패턴 목차(영문으로 기억해 둬) 총 23가지 패턴이 있다.
+Adapter Pattern, Proxy Pattern, Decorator Pattern, Singleton Pattern, Template Method Pattern
+Factory Method Pattern, Strategy Pattern, Template Callback Pattern, (Spring,  Front Controller Pattern + MVC Pattern)
+
+어탭터 패턴(Adapter Pattern) (어댑터를 번역하면 converter = 변환기)
+-->호출당하는 쪽의 메서드를 호출하는 쪽의 코드에 대응하도록 중간에 변환기(코드 추가)를 통해 호출하는 패턴
+(변환기의 역할은 서로 다른 두 인터페이스 사이에 통신이 가능하게 하는 것이다)
+
+
+프록시 패턴(Proxy Pattern) = 대리자, 대변인
+"제어 흐름을 조정하기 위한 목적으로 중간에 대리자를 두는 패턴"
+프록시 패턴의 경우 실제 서비스 객체가 가진 메서드와 같은 이름의 메서드를 사용하는데, 이를 위해 인터페이스를 사용한다.
+개방 폐쇄 원칙과 의존 역전 원칙이 적용된 설계 패턴이다.(구현에 인터페이스 사용)
+실제 서비스 메서드의 반환값에 가감하는 것을 목적으로 하지 않는다.(그래서 대리자)
+
+데코레이터 패턴(Decorator Pattern)
+"메서드 호출의 반환값에 변화를 주기 위해 중간에 장식자를 두는 패턴"(원본에 장식을 더하는 패턴)
+데코레이터 패턴은 프록시 패턴과 구현 방법이 같다. 다만 프록시 패턴은 클라이언트가 최종적으로 돌려 받는 반환값을 조작하지 않고 그대로 전달하는 반면 데코레이터 패턴은 클라이언트가 받는 반환값에 장식을 덧입힌다.
+
+싱글턴 패턴
+클래스의 인스턴스, 즉 객체를 하나만 만들어 사용하는 패턴(그것을 계속해서 재사용)
+(인스턴스를 어러 개 만들게 되면 예상치 못한 결과가 생길 경우에 사용)
+프린터 관리자, 디바이스 설정 객체, 커넥션 풀, 스레드 풀 등과 같은 경우 인스턴스를 여러 개 만들게 되면 불필요한 자원을 사용하게 되고, 또 프로그램이 예상치 못한 결과를 낳을 수 있다.
+
+템플릿 메서드 패턴(Template Method Pattern)
+"상위 클래스의 견본 메서드에서 하위 클래스가 오버라이딩한 메서드를 호출하는 패턴" 의존 역전 원칙(DIP)를 활용.
+(상위 클래스에 공통 로직을 수행하는 템플릿 메서드와 하위 클래스에 오버라이딩을 강제하는 추상 메서드 또는 선택적으로 오버라이딩할 수 있는 훅(Hook) 메서드를 두는 패턴)
+
+팩터리 메서드 패턴(Factory Method Pattern)
+"오버라이드된 메서드가 객체를 반환하는 패턴" 의존 역전 원칙(DIP)를 활용.
+
+전략 패턴(Strategy Pattern) // 디자인 패턴의 꽃
+(템플릿 메서드 패턴과의 차이는 같은 문제의 해결책으로 상속/객체 주입을 통해 해결한다는 점)
+"클라이언트가 전략을 생성해 전략을 실행할 컨텍스트에 주입하는 패턴"
+전략 패턴을 구성하는 세 요소* 
+1. 전략 메서드를 가진 전략 객체
+2. 전략 객체를 사용하는 컨텍스트(전략 객체의 사용자/소비자)
+3. 전략 객체를 생성해 컨텍스트에 주입하는 클라이언트(제3자, 전략 객체의 공급자)
+
+어댑터 패턴(Adapter Pattern) (어댑터를 번역하면 converter = 변환기)
+변환기의 역할은 서로 다른 두 인터페이스 사이에 통신이 가능하게 하는 것이다. 결국 어댑터 패턴은 개방 폐쇄 원칙(OCP)을 활용한 설계 패턴이라고 할 수 있다.
+ex) ODBC/JDBC ,JRE, 핸드폰 충전기
+
+public class AdapterServicA {
+	ServiceA sa1 = new ServiceA();
+
+	void runService() {
+		sa1.runServiceA();
+	}
+}
+
+public class AdapterServicB {
+	ServiceB sb1 = new ServiceB();
+
+	void runService() {
+		sb1.runServiceB();
+	}
+}
+
+public class ClientWithAdapter {
+	public static void main(String[] args) {
+		AdapterServicA asa1 = new AdapterServicA();
+		AdapterServicB asb1 = new AdapterServicB();
+---------------------------------------------------------------------------
+		asa1.runService();
+		asb1.runService();
+---------호출 메서드의 이름이 같은 것을 확인할 수 있다----------------
+	}
+}
+//변환기들이 인터페이스를 구현하게 해서 더 개선할 수도 있지마 일단 여기서 멈추자.
+
+결론: 호출당하는 쪽의 메서드를 호출하는 쪽의 코드에 대응하도록 중간에 변환기(코드 추가)를 통해 호출하는 패턴
+
+
+프록시 패턴(Proxy Pattern) = 대리자, 대변인
+"제어 흐름을 조정하기 위한 목적으로 중간에 대리자를 두는 패턴"
+- 개방 폐쇄 원칙과 의존 역전 원칙이 적용된 설계 패턴이다.(구현에 인터페이스 사용)
+- 실제 서비스 메서드의 반환값에 가감하는 것을 목적으로 하지 않는다.(그래서 대리자)
+
+프록시 패턴의 경우 실제 서비스 객체가 가진 메서드와 같은 이름의 메서드를 사용하는데, 이를 위해 인터페이스를 사용한다.(인터페이스를 사용하면 서비스 객체가 들어갈 자리에 대리자 객체를 대신 투입해 클라이언트 쪽에서는 실제 서비스 객체를 통해 메서드를 호출하고 반환값을 받는지, 대리자 객체를 통해 메서드를 호출하고 반환값을 받는지 전혀 모르게 처리할 수도 있다.)
+
+public interface IService {
+	String runSomething();
+}
+
+public class Service implements IService {
+	public String runSomething() {
+		return "서비스 짱!!!";
+	}
+}
+
+public class Proxy implements IService {
+	IService service1;
+
+	public String runSomething() {
+		//호출에 대한 흐름 제어가 주목적, 반환 결과를 그대로 전달");
+		service1 = new Service();
+		return service1.runSomething();
+	}
+}
+
+public class ClientWithProxy {
+	public static void main(String[] args) {
+		// 프록시를 이용한 호출
+		IService proxy = new Proxy();
+		System.out.println(proxy.runSomething());
+	}
+}
+
+
+데코레이터 패턴(Decorator Pattern)
+"메서드 호출의 반환값에 변화를 주기 위해 중간에 장식자를 두는 패턴"(원본에 장식을 더하는 패턴)
+데코레이터 패턴은 프록시 패턴과 구현 방법이 같다. 다만 프록시 패턴은 클라이언트가 최종적으로 돌려 받는 반환값을 조작하지 않고 그대로 전달하는 반면 데코레이터 패턴은 클라이언트가 받는 반환값에 장식을 덧입힌다.
+
+public interface IService {
+	public abstract String runSomething();
+}
+
+public class Service implements IService {
+	public String runSomething() {
+		return "서비스 짱!!!";
+	}
+}
+
+public class Decoreator implements IService {
+	IService service;
+
+	public String runSomething() {
+		//호출에 대한 장식 주목적, 클라이언트에게 반환 결과에 장식을 더하여 전달
+		service = new Service();
+		return "정말" + service.runSomething();
+	}
+}
+
+public class ClientWithDecolator  {
+	public static void main(String[] args) {
+		IService decoreator = new Decoreator();
+	 	System.out.println(decoreator.runSomething());
+	}
+}
+
+싱글턴 패턴
+클래스의 인스턴스, 즉 객체를 하나만 만들어 사용하는 패턴(그것을 계속해서 재사용)
+
+프린터 관리자, 커넥션 풀, 스레드 풀, 디바이스 설정 객체 등과 같은 경우 인스턴스를 여러 개 만들게 되면 불필요한 자원을 사용하게 되고, 또 프로그램이 예상치 못한 결과를 낳을 수 있다.
+
+구현에 필요한 세 가지 요소
+- new를 실행할 수 없도록 생성자에 private 접근 제어자를 지정한다.
+- 유일한 단일 객체를 반환할 수 있는 정적 메서드가 필요하다.
+- 유일한 단일 객체를 참조할 정적 참조 변수가 필요하다.
+
+public class Singleton{
+    static Singleton singletonObject;
+    
+    private Singleton(){};
+    
+    public static Singleton getInstance(){
+        if(singletonObject == null){
+            singletonObject = new Singleton();
+        }
+        
+        return singletonObject;
+    }
+}
+
+public class Client {
+	public static void main(String[] args) {
+		// private 생성자임으로 new 할 수 없다.
+		// Singleton s = new Singleton();
+
+		Singleton s1 = Singleton.getInstance();
+		Singleton s2 = Singleton.getInstance();
+		Singleton s3 = Singleton.getInstance();
+
+		System.out.println(s1);
+		System.out.println(s2);
+		System.out.println(s3);
+        // 하나의 단일 객체를 참조한다.
+        
+		s1 = null;
+		s2 = null;
+		s3 = null;        
+	}
+}
+
+#템플릿 메서드 패턴(Template Method Pattern)
+"상위 클래스의 견본 메서드에서 하위 클래스가 오버라이딩한 메서드를 호출하는 패턴" 의존 역전 원칙(DIP)를 활용.
+
+상황 : playWithOwner() 메서드를 보면 4번째 줄만 빼고는 모두 Cat, Dog 모두 동일한 것을 볼 수 있다.
+--> 객체 지향의 특성 가운데 상속을 통해 동일한 부분은 상위 클래스로, 달라지는 부분만 하위 클래스로 분할하고 싶은 욕구가 자극된다.
+
+예제)
+이에 따라 코드를 개선해 보자
+public abstract class Animal {
+	// 템플릿 메서드
+	public void playWithOwner() {
+		System.out.println("귀염둥이 이리온...");
+		play();
+		runSomething();
+		System.out.println("잘했어");
+	}
+	// 추상 메서드
+	abstract void play();
+
+	// Hook(갈고리) 메서드
+	void runSomething() {
+		System.out.println("꼬리 살랑 살랑~");
+	}
+}
+
+public class Dog extends Animal {
+	@Override
+	// 추상 메서드 오버라이딩
+	void play() {
+		System.out.println("멍! 멍!");
+	}
+
+	@Override
+	// Hook(갈고리) 메서드 오버라이딩
+	void runSomething() {
+		System.out.println("멍! 멍!~ 꼬리 살랑 살랑~");
+	}
+}
+상위 클래스에 공통 로직을 수행하는 템플릿 메서드와 하위 클래스에 오버라이딩을 강제하는 추상 메서드 또는 선택적으로 오버라이딩할 수 있는 훅(Hook) 메서드를 두는 패턴.
+
+public class Driver {
+	public static void main(String[] args) {
+		Animal bolt = new Dog();
+		Animal kitty = new Cat();
+
+		bolt.playWithOwner();
+
+		System.out.println();
+		System.out.println();
+
+		kitty.playWithOwner();
+	}
+}
+템플릿 메서드 패턴이 의존 역전 원칙(DIP)를 활용하고 있음을 알 수 있다. main 메소드 잘 확인
+
+#팩터리 메서드 패턴(Factory Method Pattern)
+"오버라이드된 메서드가 객체를 반환하는 패턴" 의존 역전 원칙(DIP)를 활용.
+
+팩터리 메서드는 객체를 생성 반환하는 메서드를 말한다. 여기에 패턴이 붙으면 하위 클래스에서 팩터리 메서드를 오버라이딩해서 객체를 반환하게 하는 것을 의미한다.
+//템플릿 메서드 패턴에 더해 볼트와 키티가 각자 가지고 놀고 싶어하는 장난감을 가져오는 모습을 상상해 보자
+public class Driver {
+	public static void main(String[] args) {
+		// 팩터리 메서드를 보유한 객체들 생성
+		Animal bolt = new Dog();
+		Animal kitty = new Cat();
+
+		// 팩터리 메서드가 반환하는 객체들
+		AnimalToy boltBall = bolt.getToy();
+		AnimalToy kittyTower = kitty.getToy();
+
+		// 팩터리 메서드가 반환한 객체들을 사용
+		boltBall.identify();
+		kittyTower.identify();
+	}
+}
+
+public abstract class Animal {
+	// 추상 팩터리 메서드
+	abstract AnimalToy getToy();
+}
+public class Dog extends Animal {
+	// 추상 팩터리 메서드 오버라이딩
+	@Override
+	AnimalToy getToy() {
+		return new DogToy();
+	}
+}
+// 팩터리 메서드가 생성할 객체의 상위 클래스
+public abstract class AnimalToy {
+	abstract void identify();
+}
+//팩터리 메서드가 생성할 객체
+public class DogToy extends AnimalToy {
+	public void identify() {
+		System.out.println("나는 테니스공! 강아지의 친구!");
+	}
+}
+
+#전략 패턴(Strategy Pattern) // 디자인 패턴의 꽃
+(템플릿 메서드 패턴과의 차이는 같은 문제의 해결책으로 상속/객체 주입을 통해 해결한다는 점)
+"클라이언트가 전략을 생성해 전략을 실행할 컨텍스트에 주입하는 패턴"
+전략 패턴을 구성하는 세 요소* 
+1. 전략 메서드를 가진 전략 객체
+2. 전략 객체를 사용하는 컨텍스트(전략 객체의 사용자/소비자)
+3. 전략 객체를 생성해 컨텍스트에 주입하는 클라이언트(제3자, 전략 객체의 공급자)
+
+public interface Strategy {
+	public abstract void runStrategy();
+}
+
+public class StrategyBow implements Strategy {
+	@Override
+	public void runStrategy() {
+		System.out.println("슝.. 쐐액.. 쇅, 최종 병기");
+	}
+}
+
+public class StrategyGun implements Strategy {
+	@Override
+	public void runStrategy() {
+		System.out.println("탕, 타당, 타다당");
+	}
+}
+
+public class Soldier {
+	void runContext(Strategy strategy) {
+		System.out.println("전투 시작");
+		strategy.runStrategy();
+		System.out.println("전투 종료");
+	}
+}
+
+public class Client {
+	public static void main(String[] args) {
+		Strategy strategy = null;
+		Soldier rambo = new Soldier();
+
+		// 총을 람보에게 전달해서 전투를 수행하게 한다.
+		strategy = new StrategyGun();
+		rambo.runContext(strategy);
+
+		System.out.println();
+
+		// 활을 람보에게 전달해서 전투를 수행하게 한다.
+		strategy = new StrategyBow();
+		rambo.runContext(strategy);
+	}
+}
+
+템플릿 콜백 패턴
+"전략을 익명 내부 클래스로 구현한 전략 패턴"
+
+
+
+
+
+MVC Pattern
+화면과 데이터 처리를 분리해서 재사용이 가능하도록 하는 구조.
+모델 : 데이터 혹은 데이터를 처리하는 영역을 의미.
+뷰 : 결과 화면을 만들어 내는 데 사용하는 자원
+컨트롤러 : 웹의 요청(request)을 처리하는 존재(뷰와 모델 사이의 중간 통신 역활)
+
+Front Controller Pattern
+모델 2 방식이 개발자와 웹 퍼블리셔 간의 분업을 이루는 데는 성공했지만, 각 컨트롤러 사이의 중복적인 코드의 문제와 개발자의 개발 패턴의 차이 등의 문제로 인해 모델 2 방식은 좀 더 강제적인 형태인 Front Controller 방식을 적용하게 됩니다. --> 모든 흐름의 제어는 Front Controller가 담당.
+
+Spring MVC 구조
+1. 사용자의 모든 요청은 스프링 MVC의 Front Controller에게 전달
+2. 전달된 요청은 적절한 컨트롤러를 찾아서 호출.(이때 사용되는 컨트롤러의 작업이 개발자의 몫으로 남겨진 일입니다.)
+3. 컨트롤러는 적절한 서비스 객체를 찾아서 호출
+4. 서비스는 데이터베이스의 작업을 담당하는 DAO를 이용해 원하는 데이터를 요청
+5. DAO 객체는 MyBatis를 이용하는 Mapper를 통해서 원하는 작업을 수행
+
+cf.
+Head First Design Patterns about Proxy
+혹시 좋은 경찰, 나쁜 경찰 놀이라고 들어 보셨나요? 여러분이 좋은 경찰이라고 해 봅시다. 좋은 경찰은 다양한 서비스를 친절하고 성의껏 제공합니다. 하지만 모든 사람들이 다 서비스를 요구하게 되면 일이 너무 많아지기 때문에, 나쁜 경찰이 좋은 경찰에 대한 접근을 제어하도록 해 놓았습니다. 바로 그게 프록시(proxy)가 하는 일입니다. 접근을 제어하고 관리하죠. 조만간 배우게 되겠지만 프록시는 자신이 대변하는 객체와 그 객체에 접근하고자 하는 클라이언트 사이에서 여러 가지 방식으로 작업을 처리합니다. 프록시는 자신이 대변하는 객체에 대해서 인터넷을 통해 들어오는 메소드 호출을 쫒아내는 것으로 알려져 있습니다. 또한 게으른 객체들을 대신해서 끈기 있게 기다리는 일을 맡고 있기도 하죠.
